@@ -7,6 +7,10 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { TouchableOpacity } from "react-native";
 
+import { ModalHeaderText } from "@/components/ModalHeaderText";
+import { grey } from "@/constants/colors";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
@@ -58,7 +62,9 @@ const RootLayout = () => {
       publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!}
       tokenCache={tokenCache}
     >
-      <RootLayoutNav />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <RootLayoutNav />
+      </GestureHandlerRootView>
     </ClerkProvider>
   );
 };
@@ -99,9 +105,20 @@ const RootLayoutNav = () => {
         options={{
           presentation: "transparentModal",
           animation: "fade",
+          headerTransparent: true,
+          headerTitle: () => <ModalHeaderText />,
           headerLeft: () => (
-            <TouchableOpacity onPress={() => router.back()}>
-              <Ionicons name="close-outline" size={28} />
+            <TouchableOpacity
+              onPress={() => router.back()}
+              style={{
+                backgroundColor: "#FFF",
+                borderColor: grey,
+                borderRadius: 20,
+                borderWidth: 1,
+                padding: 4,
+              }}
+            >
+              <Ionicons name="close-outline" size={22} />
             </TouchableOpacity>
           ),
         }}
